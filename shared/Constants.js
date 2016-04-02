@@ -46,24 +46,6 @@ Constants.CANVAS_WIDTH = 800;
  */
 Constants.CANVAS_HEIGHT = 600;
 
-/**
- * @const
- * @type {number}
- */
-Constants.STATUS_IN_LOBBY = 0;
-
-/**
- * @const
- * @type {number}
- */
-Constants.STATUS_IN_ROOM = 1;
-
-/**
- * @const
- * @type {number}
- */
-Constants.STATUS_IN_GAME = 2;
-
 if (typeof module === 'object') {
   /**
    * This is used if Constants is being imported as a Node module.

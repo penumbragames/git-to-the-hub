@@ -1,6 +1,6 @@
 {
-  "name": "browsercraft",
-  "description": "Browser RTS",
+  "name": "git-to-the-hub",
+  "description": "King of the Hill platformer battle, Submission for HackBCA III 2016.",
   "main": "server.js",
   "authors": [
     "Alvin Lin",

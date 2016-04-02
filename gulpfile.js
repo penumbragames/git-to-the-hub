@@ -68,36 +68,18 @@ gulp.task('js-lint', function() {
 });
 
 gulp.task('js-compile', function() {
-
-  var indexJs = gulp.src(['./public/js/index.js'])
+  return gulp.src(['./public/js/index.js'])
     .pipe(plumber())
     .pipe(getClosureCompilerConfiguration('index.min.js'))
     .pipe(gulp.dest('./public/dist'));
-
-  var gameJs = gulp.src(['./shared/*.js',
-                         './public/js/game/game.js',
-                         './public/js/game/*.js' ])
-    .pipe(plumber())
-    .pipe(getClosureCompilerConfiguration('game.min.js'))
-    .pipe(gulp.dest('./public/dist'));
-
-  return merge(indexJs, gameJs);
 });
 
 gulp.task('less', function() {
-  var indexCss = gulp.src('./public/less/index.less')
+  return gulp.src('./public/less/index.less')
     .pipe(plumber())
     .pipe(getLessConfiguration())
     .pipe(rename('index.min.css'))
     .pipe(gulp.dest('./public/dist'));
-
-  var gameCss = gulp.src('./public/less/game.less')
-    .pipe(plumber())
-    .pipe(getLessConfiguration())
-    .pipe(rename('game.min.css'))
-    .pipe(gulp.dest('./public/dist'));
-
-  return merge(indexCss, gameCss);
 });
 
 gulp.task('watch-js', function() {

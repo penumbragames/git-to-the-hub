@@ -7,7 +7,6 @@
 var CHAT_TAG = '[Git To The Hub]';
 var DEV_MODE = false;
 var FRAME_RATE = 1000 / 60;
-var LOBBY_UPDATE_RATE = 500;
 var IP = process.env.IP || 'localhost';
 var PORT_NUMBER = process.env.PORT || 5000;
 
@@ -24,21 +23,17 @@ var http = require('http');
 var morgan = require('morgan');
 var socketIO = require('socket.io');
 
-var router = require('./router/router');
+var Game = require('/lib/Game');
 
 // Initialization.
 var app = express();
 var server = http.Server(app);
-var sessionConfig = session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true
-});
 var io = socketIO(server);
+
+var game = Game.create();
 
 app.set('port', PORT_NUMBER);
 app.set('view engine', 'jade');
-app.locals.dev_mode = DEV_MODE;
 
 app.use(morgan(':date[web] :method :url :req[header] :remote-addr :status'));
 app.use('/public',
@@ -46,7 +41,11 @@ app.use('/public',
 app.use('/shared',
         express.static(__dirname + '/shared'));
 
-app.use('/', router);
+app.get('/', function(request, response) {
+  response.render('index', {
+    DEV_MODE: DEV_MODE
+  });
+});
 
 /**
  * Server side input handler, modifies the state of the players and the
@@ -57,7 +56,6 @@ io.on('connection', function(socket) {
 
   // When a player no-usernames, remove them from the game.
   socket.on('disconnect', function() {
-    lobbyManager.removePlayer(socket.id);
   });
 });
 
