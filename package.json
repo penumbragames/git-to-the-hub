@@ -1,0 +1,41 @@
+{
+  "name": "git-to-the-hub",
+  "version": "1.0.0",
+  "description": "King of the Hill platformer battle, Submission for HackBCA III 2016.",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "bower": "^1.7.7",
+    "express": "^4.13.4",
+    "google-closure-compiler": "^20160315.2.0",
+    "gulp": "^3.9.1",
+    "gulp-gjslint": "^0.1.5",
+    "gulp-less": "^3.0.5",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "hashmap": "^2.0.4",
+    "jade": "^1.11.0",
+    "less-plugin-autoprefix": "^1.5.1",
+    "less-plugin-clean-css": "^1.5.1",
+    "merge-stream": "^1.0.0",
+    "morgan": "^1.7.0",
+    "socket.io": "^1.4.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/penumbragames/git-to-the-hub.git"
+  },
+  "author": "Alvin Lin (omgimanerd) Kenneth Li (noobbyte) Pranay Gupta (gpranay) Katherine Shatinsky (kshatinsky)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/penumbragames/git-to-the-hub/issues"
+  },
+  "homepage": "https://github.com/penumbragames/git-to-the-hub#readme"
+}

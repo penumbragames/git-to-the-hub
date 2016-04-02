@@ -1,0 +1,42 @@
+extends ./layout.jade
+
+block head
+  link(rel="stylesheet", href="/public/dist/index.min.css")
+        
+block body
+  br
+  #container
+    #topbar
+      #message
+        p #{message}
+      
+      if username
+        p #{username}
+      
+      else
+        form#login
+          input#login-username(type="text", placeholder="Username")
+          input#login-password(type="password", placeholder="Password")
+          button(type="submit") Submit
+      
+      form#register
+        input#register-username(type="text", placeholder="Username")
+        input#register-password(type="password", placeholder="Password")
+        input#register-confirm-password(type="password",
+                                        placeholder="Confirm Password")
+        input#register-email(type="email", placeholder="Email")
+        
+        button(type="submit") Submit
+        
+    hr
+    
+    a(href="/logout") Logout
+    
+    #copyright &copy; 2015 Alvin Lin and Kenneth Li. All Rights Reserved.
+  
+block scripts
+  script(src="/public/bower/jquery/dist/jquery.min.js")
+  if dev_mode
+    script(src="/public/js/index.js")
+  else
+    script(src="/public/dist/index.min.js")
