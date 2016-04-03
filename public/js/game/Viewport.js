@@ -11,26 +11,26 @@
  * coordinates to appropriate canvas coordinates.
  * @constructor
  * @param {?Array<number>=} center The coordinates of the center of the
- *   ViewPort.
+ *   Viewport.
  */
-function ViewPort(center) {
+function Viewport(center) {
   this.center = center || [0, 0];
 }
 
 /**
- * This is the factory method for creating a ViewPort.
- * @return {ViewPort}
+ * This is the factory method for creating a Viewport.
+ * @return {Viewport}
  */
-ViewPort.create = function() {
-  return new ViewPort();
+Viewport.create = function() {
+  return new Viewport();
 };
 
 /**
- * This method updates the ViewPort with the new absolute world coordinates
+ * This method updates the Viewport with the new absolute world coordinates
  * of its center.
- * @param {number} center The new coordinates of the center of the ViewPort
+ * @param {number} center The new coordinates of the center of the Viewport
  */
-ViewPort.prototype.setCenter = function(center) {
+Viewport.prototype.setCenter = function(center) {
   this.center = center;
 };
 
@@ -42,7 +42,7 @@ ViewPort.prototype.setCenter = function(center) {
  *   returned.
  * @return {Array<number>}
  */
-ViewPort.prototype.toCanvasCoords = function(coords) {
+Viewport.prototype.toCanvasCoords = function(coords) {
   var translateX = this.center[0] - Constants.CANVAS_WIDTH / 2;
   var translateY = this.center[1] - Constants.CANVAS_HEIGHT / 2;
   return [coords[0] - translateX,
@@ -54,7 +54,7 @@ ViewPort.prototype.toCanvasCoords = function(coords) {
  * @param {Array<number>} coords The coords to convert
  * @return {Array<number>}
  */
-ViewPort.prototype.toAbsoluteCoords = function(coords) {
+Viewport.prototype.toAbsoluteCoords = function(coords) {
   var translateX = this.center[0] - Constants.CANVAS_WIDTH / 2;
   var translateY = this.center[1] - Constants.CANVAS_HEIGHT / 2;
   return [coords[0] + translateX,

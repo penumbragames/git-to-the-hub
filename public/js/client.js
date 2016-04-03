@@ -5,5 +5,12 @@
 
 $(document).ready(function() {
   var socket = io();
+  var game = Game.create(socket, document.getElementById('canvas'));
+  
 
+  socket.on('new-player', {
+    
+  });
+
+  game.init();
 });
