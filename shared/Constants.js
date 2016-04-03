@@ -70,6 +70,12 @@ Constants.PLAYER_MAX_HEALTH = 10;
  */
 Constants.SCORING_REGION = [1250, 1200, 400, 500];
 
+/**
+ * @const
+ * @type {Array<number>}
+ */
+Constants.SCORING_REGION_DRAW = [1650, 1700, 400, 500];
+
 if (typeof module === 'object') {
   /**
    * This is used if Constants is being imported as a Node module.
