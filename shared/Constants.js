@@ -20,7 +20,7 @@ function Constants() {
  * @const
  * @type {string}
  */
-Constants.BIG_FUCKUP_ERROR = "This should not happen! Tell Alvin immediately!";
+Constants.BIG_FUCKUP_ERROR = 'This should not happen! Tell Alvin immediately!';
 
 /**
  * @const
@@ -38,13 +38,13 @@ Constants.WORLD_MAX = 2500;
  * @const
  * @type {number}
  */
-Constants.CANVAS_WIDTH = 1080;
+Constants.CANVAS_WIDTH = 1024;
 
 /**
  * @const
  * @type {number}
  */
-Constants.CANVAS_HEIGHT = 760;
+Constants.CANVAS_HEIGHT = 768;
 
 /**
  * @const
