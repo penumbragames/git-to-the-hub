@@ -16,7 +16,7 @@
 
 .modal {
     background-color: #fff;
-    margin: 27.5% 20% 37.5% 20%;
+    margin: 15% 20% 60% 20%;
     width: 60%;
     height: 25%;
     display: block;
@@ -37,7 +37,7 @@
 }
 
 .modal > div > form {
-    margin-top: 6em;
+    margin-top: 50%;
     height: 40%;
 }
 

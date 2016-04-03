@@ -16,8 +16,9 @@ block head
 block body
   div#prompt(class="modal")
     div
-      form
-        input(class="textbox", value="Name")
+      form(id="name-form")
+        input(id="name-input", class="textbox", placeholder="Name")
+        input(id="name-submit", type="submit")
     div(class="main clearfix")
       nav#menu(class="nav")
         ul

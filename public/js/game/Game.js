@@ -100,8 +100,6 @@ Game.prototype.update = function() {
   if (this.self) {
     this.viewport.setCenter(this.self['x'], this.self['y']);
     var input = this.inputHandler;
-    var absoluteCoords = this.viewport.toAbsoluteCoords(
-        input.mouseCoords[0], input.mouseCoords[1]);
 
     // Emits an event for the containing the player's intention to the server.
     var packet = {
@@ -112,8 +110,8 @@ Game.prototype.update = function() {
         down: input.down
       },
 
-      mouseAngle: Math.atan2(absoluteCoords[1] - this.self['y'],
-                             absoluteCoords[0] - this.self['x']),
+      mouseAngle: Math.atan2(-(input.mouseCoords[1] - Constants.CANVAS_HEIGHT / 2),
+                             input.mouseCoords[0] - Constants.CANVAS_WIDTH / 2),
       leftClick: input.leftClick
     };
 

@@ -120,7 +120,7 @@ Drawing.prototype.drawPlayer = function(x, y, width, height, orientation, health
   var nameX = x + width / 2;
   var nameY = y - 25;
   
-  this.context.font = '16px Consolas';
+  this.context.font = '20px Consolas';
   this.context.textAlign = 'center';
   this.context.fillStyle = 'white';
   this.context.fillText(name, nameX, nameY);
@@ -158,7 +158,7 @@ Drawing.prototype.drawBackground = function() {
 
 Drawing.prototype.drawFloater = function(x, y, frame, text) {
   this.context.save();
-  this.context.font = '16px Consolas';
+  this.context.font = '20px Consolas';
   this.context.textAlign = 'center';
   this.context.fillStyle = 'white';
   this.context.globalAlpha = 1 - frame / 60;
