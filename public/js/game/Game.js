@@ -97,7 +97,8 @@ Game.prototype.update = function() {
   if (this.self) {
     this.viewport.setCenter(this.self['x'], this.self['y']);
     var input = this.inputHandler;
-    var absoluteCoords = this.viewport.toAbsoluteCoords(input.mouseCoords);
+    var absoluteCoords = this.viewport.toAbsoluteCoords(
+        input.mouseCoords[0], input.mouseCoords[1]);
 
     // Emits an event for the containing the player's intention to the server.
     var packet = {
@@ -158,7 +159,7 @@ Game.prototype.draw = function() {
     var position = this.viewport.toCanvasCoords(
         this.platforms[i]['x'], this.platforms[i]['y']);
     this.drawing.drawPlatform(position[0],
-                              position[1] - this.platforms[i]['width'],
+                              position[1] - this.platforms[i]['height'],
                               this.platforms[i]['width'],
                               this.platforms[i]['height']);
   }
