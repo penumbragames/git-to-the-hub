@@ -129,7 +129,16 @@ Drawing.prototype.drawPlayer = function(x, y, width, height, orientation, health
 Drawing.prototype.drawProjectile = function(x, y, width, height, orientation) {
   this.context.save();
   this.context.translate(x + width / 2, y + height / 2);
-  this.context.rotate(orientation);
+
+  var adjustedOrientation;
+  
+  if (Math.abs(orientation % Math.PI) < Math.PI / 2) {
+    adjustedOrientation = -(Math.abs(orientation + Math.PI / 2) - Math.PI / 2);    
+  } else {
+    adjustedOrientation = -(orientation - Math.PI);
+  }  
+  
+  this.context.rotate(adjustedOrientation);
   this.context.drawImage(this.projectileImg, 0, 0, width, height);
   this.context.restore();
 };
