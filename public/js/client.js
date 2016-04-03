@@ -3,14 +3,32 @@
  * @author alvin.lin.dev@gmail.com (Alvin Lin)
  */
 
+var socket = io();
+var game = Game.create(socket, $('#canvas'));
+
 $(document).ready(function() {
-  var socket = io();
-  var game = Game.create(socket, document.getElementById('canvas'));
+  $('#container').hide();
+  $('#name-form').focus();
+
+  $('#name-form').submit = function() {
+    var name = $('#name-input').val();
   
+    socket.emit('new-player', {
+      name: name
+    }, function(data) {
+      if (data['success']) {
+        $('#name-form').hide();
+      } else {
+        window.alert(data['message']);
+      }
+    });
 
-  socket.on('new-player', {
-    
-  });
+    return false;
+  }
 
-  game.init();
+  init();
 });
+
+function init() {
+  game.animate();
+}
