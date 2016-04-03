@@ -24,6 +24,7 @@ function Game(socket, inputHandler, drawing, viewport) {
   this.self = null;
   this.players = [];
   this.projectiles = [];
+  this.platforms = [];
   
   this.animationFrameId = 0;
 }
@@ -82,6 +83,7 @@ Game.prototype.receiveGameState = function(state) {
   this.self = state['self'];
   this.players = state['players'];
   this.projectiles = state['projectiles'];
+  this.platforms = state['platforms'];
 
   this.viewport.setCenter(this.self['position']);
   console.log(this.self['position']);
@@ -121,11 +123,11 @@ Game.prototype.draw = function() {
   // Clear the canvas.
   this.drawing.clear();
 
-  var test = this.viewport.toCanvasCoords([0, 10]);
   this.drawing.context.fillStyle = 'black';
   
   for (var i = 0; i < Constants.WORLD_MAX; i += 60) {
-    this.drawing.context.fillRect(i, test[1], 30, 10);
+    var test = this.viewport.toCanvasCoords([i, 10]);
+    this.drawing.context.fillRect(test[0], test[1], 30, 10);
   }
   
   for (var i = 0; i < this.players.length; i++) {
@@ -148,6 +150,14 @@ Game.prototype.draw = function() {
                                 this.projectiles[i]['orientation']);
   }
 
+  for (var i = 0; i < this.platforms.length; i++) {
+    var platform = this.viewport.toCanvasCoords(this.platforms[i]['position']);
+    this.drawing.drawPlatform(position[0],
+                              position[1],
+                              this.platforms[i]['hitboxSize'][0],
+                              this.platforms[i]['hitboxSize'][1]);
+  }
+  
   if (this.self) {
     var position = this.viewport.toCanvasCoords(this.self['position']);
     this.drawing.drawPlayer(position[0],
