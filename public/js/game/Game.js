@@ -83,10 +83,10 @@ Game.prototype.stopAnimation = function() {
 Game.prototype.receiveGameState = function(state) {
   this.self = state['self'];
   this.players = state['players'];
+  console.log(this.platforms);
   this.projectiles = state['projectiles'];
   this.platforms = state['platforms'];
   x = this.platforms;
-  this.viewport.setCenter(this.self['position']);
 };
 
 /**
@@ -95,6 +95,7 @@ Game.prototype.receiveGameState = function(state) {
  */
 Game.prototype.update = function() {
   if (this.self) {
+    this.viewport.setCenter(this.self['x'], this.self['y']);
     var input = this.inputHandler;
     var absoluteCoords = this.viewport.toAbsoluteCoords(input.mouseCoords);
 
@@ -106,9 +107,9 @@ Game.prototype.update = function() {
         up: input.up,
         down: input.down
       },
-      
-      mouseAngle: Math.atan2(absoluteCoords[1] - this.self['position'][1],
-                             absoluteCoords[0] - this.self['position'][0]),
+
+      mouseAngle: Math.atan2(absoluteCoords[1] - this.self['y'],
+                             absoluteCoords[0] - this.self['x']),
       leftClick: input.leftClick
     };
 
@@ -129,12 +130,13 @@ Game.prototype.draw = function() {
   }
 
   for (var i = 0; i < this.players.length; i++) {
-    var position = this.viewport.toCanvasCoords(this.players[i]['position']);
+    var position = this.viewport.toCanvasCoords(
+        this.players[i]['x'], this.players[i]['y']);
     // adding height to allow bottom-left coordinate system
     this.drawing.drawPlayer(position[0],
-                            position[1] - this.players[i]['hitboxSize'][1],
-                            this.players[i]['hitboxSize'][0],
-                            this.players[i]['hitboxSize'][1],
+                            position[1] - this.players[i]['height'],
+                            this.players[i]['height'],
+                            this.players[i]['width'],
                             this.players[i]['orientation'],
                             this.players[i]['health'],
                             this.players[i]['name'],
@@ -143,29 +145,31 @@ Game.prototype.draw = function() {
 
   for (var i = 0; i < this.projectiles.length; i++) {
     var position = this.viewport.toCanvasCoords(
-        this.projectiles[i]['position']);
+        this.projectiles[i]['x'], this.projectiles[i]['y']);
     this.drawing.drawProjectile(
         position[0],
-        position[1] - this.projectiles[i]['hitboxSize'][1],
-        this.projectiles[i]['hitboxSize'][0],
-        this.projectiles[i]['hitboxSize'][1],
+        position[1] - this.projectiles[i]['height'],
+        this.projectiles[i]['width'],
+        this.projectiles[i]['height'],
         this.projectiles[i]['orientation']);
   }
 
   for (var i = 0; i < this.platforms.length; i++) {
-    var position = this.viewport.toCanvasCoords(this.platforms[i]['position']);
+    var position = this.viewport.toCanvasCoords(
+        this.platforms[i]['x'], this.platforms[i]['y']);
     this.drawing.drawPlatform(position[0],
-                              position[1] - this.platforms[i]['hitboxSize'][1],
-                              this.platforms[i]['hitboxSize'][0],
-                              this.platforms[i]['hitboxSize'][1]);
+                              position[1] - this.platforms[i]['width'],
+                              this.platforms[i]['width'],
+                              this.platforms[i]['height']);
   }
 
   if (this.self) {
-    var position = this.viewport.toCanvasCoords(this.self['position']);
+    var position = this.viewport.toCanvasCoords(
+        this.self['x'], this.self['y']);
     this.drawing.drawPlayer(position[0],
-                            position[1] - this.self['hitboxSize'][1],
-                            this.self['hitboxSize'][0],
-                            this.self['hitboxSize'][1],
+                            position[1] - this.self['height'],
+                            this.self['width'],
+                            this.self['height'],
                             this.self['orientation'],
                             this.self['health'],
                             this.self['name'],

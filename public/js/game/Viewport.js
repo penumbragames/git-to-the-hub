@@ -10,11 +10,12 @@
  * an abstract class that handles the math of converting absolute
  * coordinates to appropriate canvas coordinates.
  * @constructor
- * @param {?Array<number>=} center The coordinates of the center of the
- *   Viewport.
+ * @param {number} centerX The x coordinate of the center of the Viewport.
+ * @param {number} centerY The y coordinate of the center of the Viewport.
  */
-function Viewport(center) {
-  this.center = center || [0, 0];
+function Viewport(centerX, centerY) {
+  this.centerX = centerX || 0;
+  this.centerY = centerY || 0;
 }
 
 /**
@@ -28,35 +29,38 @@ Viewport.create = function() {
 /**
  * This method updates the Viewport with the new absolute world coordinates
  * of its center.
- * @param {number} center The new coordinates of the center of the Viewport
+ * @param {number} centerX The x coordinate of the center of the Viewport.
+ * @param {number} centerY The y coordinate of the center of the Viewport.
  */
-Viewport.prototype.setCenter = function(center) {
-  this.center = center;
+Viewport.prototype.setCenter = function(centerX, centerY) {
+  this.centerX = centerX;
+  this.centerY = centerY
 };
 
 /**
- * Given an object, returns an array containing the object's converted
- * coordinates. The object must be a valid data structure sent by the
- * server with an x and y value.
- * @param {Array<number>} coords The object whose converted coords should be
- *   returned.
+ * This method converts two absolute world coordinates to canvas coordinates
+ * for drawing.
+ * @param {number} centerX The x coordinate to convert.
+ * @param {number} centerY The y coordinate to convert.
  * @return {Array<number>}
  */
-Viewport.prototype.toCanvasCoords = function(coords) {
-  var translateX = this.center[0] - Constants.CANVAS_WIDTH / 2;
-  var translateY = this.center[1] - Constants.CANVAS_HEIGHT / 2;
-  return [coords[0] - translateX,
-          Constants.CANVAS_HEIGHT - (coords[1] - translateY)];
+Viewport.prototype.toCanvasCoords = function(x, y) {
+  var translateX = this.centerX - Constants.CANVAS_WIDTH / 2;
+  var translateY = this.centerY - Constants.CANVAS_HEIGHT / 2;
+  return [x - translateX,
+          Constants.CANVAS_HEIGHT - (y - translateY)];
 };
 
 /**
- *
- * @param {Array<number>} coords The coords to convert
+ * This method converts two canvas coordinates to absolute world coordinates
+ * for calculations.
+ * @param {number} x The x coordinate to convert.
+ * @param {number} y The y coordinate to convert.
  * @return {Array<number>}
  */
-Viewport.prototype.toAbsoluteCoords = function(coords) {
-  var translateX = this.center[0] - Constants.CANVAS_WIDTH / 2;
-  var translateY = this.center[1] - Constants.CANVAS_HEIGHT / 2;
-  return [coords[0] + translateX,
-          (Constants.CANVAS_HEIGHT - coords[1]) + translateY];
+Viewport.prototype.toAbsoluteCoords = function(x, y) {
+  var translateX = this.centerX - Constants.CANVAS_WIDTH / 2;
+  var translateY = this.centerY - Constants.CANVAS_HEIGHT / 2;
+  return [x + translateX,
+          (Constants.CANVAS_HEIGHT - y) + translateY];
 };
