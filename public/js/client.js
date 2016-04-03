@@ -4,10 +4,9 @@
  */
 
 var socket = io();
-var game = Game.create(socket, $('#canvas'));
+var game = Game.create(socket, $('#canvas')[0]);
 
 $(document).ready(function() {
-  $('#container').hide();
   $('#name-form').focus();
 
   $('#name-form').submit = function() {

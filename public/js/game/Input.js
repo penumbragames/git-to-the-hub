@@ -32,7 +32,7 @@ function Input(element) {
  */
 Input.create = function(element) {
   // This attribute is necessary to allow the element to listen to key events.
-  element.setAttribute('tabindex', 1);
+  element.setAttribute('taUtil.bindex', 1);
   var input = new Input(element);
   input.applyEventHandlers();
   return input;
@@ -43,11 +43,11 @@ Input.create = function(element) {
  * track.
  */
 Input.prototype.applyEventHandlers = function() {
-  this.element.addEventListener('mousedown', bind(this, this.onMouseDown));
-  this.element.addEventListener('mouseup', bind(this, this.onMouseUp));
-  this.element.addEventListener('mousemove', bind(this, this.onMouseMove));
-  this.element.addEventListener('keyup', bind(this, this.onKeyUp));
-  this.element.addEventListener('keydown', bind(this, this.onKeyDown));
+  this.element.addEventListener('mousedown', Util.bind(this, this.onMouseDown));
+  this.element.addEventListener('mouseup', Util.bind(this, this.onMouseUp));
+  this.element.addEventListener('mousemove', Util.bind(this, this.onMouseMove));
+  this.element.addEventListener('keyup', Util.bind(this, this.onKeyUp));
+  this.element.addEventListener('keydown', Util.bind(this, this.onKeyDown));
 };
 
 /**
@@ -55,11 +55,11 @@ Input.prototype.applyEventHandlers = function() {
  * class should track.
  */
 Input.prototype.removeEventHandlers = function() {
-  this.element.removeEventListener('mousedown', bind(this, this.onMouseDown));
-  this.element.removeEventListener('mouseup', bind(this, this.onMouseUp));
-  this.element.removeEventListener('mousemove', bind(this, this.onMouseMove));
-  this.element.removeEventListener('keyup', bind(this, this.onKeyUp));
-  this.element.removeEventListener('keydown', bind(this, this.onKeyDown));
+  this.element.removeEventListener('mousedown', Util.bind(this, this.onMouseDown));
+  this.element.removeEventListener('mouseup', Util.bind(this, this.onMouseUp));
+  this.element.removeEventListener('mousemove', Util.bind(this, this.onMouseMove));
+  this.element.removeEventListener('keyup', Util.bind(this, this.onKeyUp));
+  this.element.removeEventListener('keydown', Util.bind(this, this.onKeyDown));
 };
 
 /**
