@@ -33,6 +33,7 @@ block body
                 i(aria-hidden="true", class="icon-blog")
               span About
   #container
+    div#leaderboard
     canvas#canvas
   
 block scripts
@@ -45,6 +46,7 @@ block scripts
     script(src="/public/js/game/Game.js")
     script(src="/public/js/game/Input.js")
     script(src="/public/js/game/Viewport.js")
+    script(src="/public/js/game/Leaderboard.js")
     script(src="/public/js/client.js")
   else
     script(src="/public/dist/index.min.js")

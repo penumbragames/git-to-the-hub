@@ -14,9 +14,9 @@
  * @param {Viewport} viewport The Viewport object that will manage the player's
  *   current view.
  */
-function Game(socket, inputHandler, drawing, viewport) {
+function Game(socket, leaderboard, inputHandler, drawing, viewport) {
   this.socket = socket;
-
+  this.leaderboard = leaderboard;
   this.inputHandler = inputHandler;
   this.drawing = drawing;
   this.viewport = viewport;
@@ -40,15 +40,15 @@ var clear = true;
  *   draw to.
  * @return {Game}
  */
-Game.create = function(socket, canvasElement) {
+Game.create = function(socket, leaderboardElement, canvasElement) {
   canvasElement.width = Constants.CANVAS_WIDTH;
   canvasElement.height = Constants.CANVAS_HEIGHT;
   var canvasContext = canvasElement.getContext('2d');
-
+  var leaderboard = new Leaderboard(leaderboardElement);
   var inputHandler = Input.create(canvasElement);
   var drawing = Drawing.create(canvasContext);
   var viewport = Viewport.create();
-  return new Game(socket, inputHandler, drawing, viewport);
+  return new Game(socket, leaderboard, inputHandler, drawing, viewport);
 };
 
 /**
@@ -90,6 +90,7 @@ Game.prototype.receiveGameState = function(state) {
   this.players = state['players'];
   this.projectiles = state['projectiles'];
   this.platforms = state['platforms'];
+  this.leaderboard.update(state['leaderboard']);
 };
 
 /**
