@@ -63,7 +63,10 @@ app.get('/test', function(request, response) {
 io.on('connection', function(socket) {
 
   socket.on('new-player', function(data, callback) {
-    game.addNewPlayer(socket.id, data.name)
+    game.addNewPlayer(socket.id, data.name);
+    callback({
+      success: true
+    });
   });
 
   // When a player no-usernames, remove them from the game.
