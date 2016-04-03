@@ -26,12 +26,15 @@ Leaderboard.prototype.update = function(players) {
     this.element.removeChild(this.element.firstChild);
   }
 
+  var header = document.createElement('h1');
+  header.appendChild(document.createTextNode('Leaderboard'));
+  this.element.appendChild(header);
+
   for (var i = 0; i < this.players.length; ++i) {
     var playerElement = document.createElement('li');
     playerElement.appendChild(document.createTextNode(
       this.players[i].name +
-        ":  Kills: "   + this.players[i].kills +
-        "  Deaths: "  + this.players[i].deaths));
+        ":  Score: "   + this.players[i]['score']));
     this.element.appendChild(playerElement);
   };
 };
