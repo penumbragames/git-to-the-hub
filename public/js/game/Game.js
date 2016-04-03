@@ -96,6 +96,7 @@ Game.prototype.receiveGameState = function(state) {
 Game.prototype.update = function() {
   if (this.self) {
     var input = this.inputHandler;
+    var absoluteCoords = this.viewport.toAbsoluteCoords(input.mouseCoords);
 
     // Emits an event for the containing the player's intention to the server.
     var packet = {
@@ -105,8 +106,9 @@ Game.prototype.update = function() {
         up: input.up,
         down: input.down
       },
-
-      mouseCoords: input.mouseCoords,
+      
+      mouseAngle: Math.atan2(absoluteCoords[1] - this.self['position'][1],
+                             absoluteCoords[0] - this.self['position'][0]),
       leftClick: input.leftClick
     };
 
