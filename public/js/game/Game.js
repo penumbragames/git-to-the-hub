@@ -86,7 +86,6 @@ Game.prototype.receiveGameState = function(state) {
   this.platforms = state['platforms'];
 
   this.viewport.setCenter(this.self['position']);
-  console.log(this.self['position']);
 };
 
 /**
@@ -122,13 +121,6 @@ Game.prototype.update = function() {
 Game.prototype.draw = function() {
   // Clear the canvas.
   this.drawing.clear();
-
-  this.drawing.context.fillStyle = 'black';
-  
-  for (var i = 0; i < Constants.WORLD_MAX; i += 60) {
-    var test = this.viewport.toCanvasCoords([i, 10]);
-    this.drawing.context.fillRect(test[0], test[1], 30, 10);
-  }
   
   for (var i = 0; i < this.players.length; i++) {
     var position = this.viewport.toCanvasCoords(this.players[i]['position']);
@@ -151,7 +143,7 @@ Game.prototype.draw = function() {
   }
 
   for (var i = 0; i < this.platforms.length; i++) {
-    var platform = this.viewport.toCanvasCoords(this.platforms[i]['position']);
+    var position = this.viewport.toCanvasCoords(this.platforms[i]['position']);
     this.drawing.drawPlatform(position[0],
                               position[1],
                               this.platforms[i]['hitboxSize'][0],
