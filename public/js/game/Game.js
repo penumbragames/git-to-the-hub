@@ -144,6 +144,12 @@ Game.prototype.draw = function() {
                             false);
   }
 
+  var goalCoords = this.viewport.toCanvasCoords(Constants.SCORING_REGION_DRAW[0],
+                                                Constants.SCORING_REGION_DRAW[1]);
+  this.drawing.drawGoal(goalCoords[0], goalCoords[1],
+                        Constants.SCORING_REGION_DRAW[2],
+                        Constants.SCORING_REGION_DRAW[3]);
+  
   for (var i = 0; i < this.platforms.length; i++) {
     var position = this.viewport.toCanvasCoords(
         this.platforms[i]['x'], this.platforms[i]['y']);
@@ -181,4 +187,6 @@ Game.prototype.draw = function() {
         this.projectiles[i]['height'],
         this.projectiles[i]['orientation']);
   }
+
+  
 };

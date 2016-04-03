@@ -13,11 +13,12 @@
  * @constructor
  */
 function Drawing(context, selfPlayerImg, otherPlayerImg,
-                 projectileImg, platformImg, backgroundImg) {
+                 projectileImg, goalImg, platformImg, backgroundImg) {
   this.context = context;
   this.selfPlayerImg = selfPlayerImg;
   this.otherPlayerImg = otherPlayerImg;
   this.projectileImg = projectileImg;
+  this.goalImg = goalImg;
   this.platformImg = platformImg;
   this.backgroundImg = backgroundImg;
 }
@@ -32,6 +33,7 @@ Drawing.SELF_PLAYER_RIGHT_SRC = Drawing.BASE_IMG_URL + 'self-player-right.png';
 Drawing.OTHER_PLAYER_LEFT_SRC = Drawing.BASE_IMG_URL + 'other-player-left.png';
 Drawing.OTHER_PLAYER_RIGHT_SRC = Drawing.BASE_IMG_URL + 'other-player-right.png';
 Drawing.PROJECTILE_SRC = Drawing.BASE_IMG_URL + 'projectile.png';
+Drawing.GOAL_SRC = Drawing.BASE_IMG_URL + 'goal.png';
 Drawing.PLATFORM_SRC = Drawing.BASE_IMG_URL + 'platform.png';
 Drawing.BACKGROUND_SRC = Drawing.BASE_IMG_URL + 'background.png';
 
@@ -47,11 +49,12 @@ Drawing.create = function(context) {
   var otherPlayerImg = [Drawing.createImage(Drawing.OTHER_PLAYER_LEFT_SRC, 0, 0),
                         Drawing.createImage(Drawing.OTHER_PLAYER_RIGHT_SRC, 0, 0)];
   var projectileImg = Drawing.createImage(Drawing.PROJECTILE_SRC, 0, 0);
+  var goalImg = Drawing.createImage(Drawing.GOAL_SRC, 0, 0);
   var platformImg = Drawing.createImage(Drawing.PLATFORM_SRC, 0, 0);
   var backgroundImg = Drawing.createImage(Drawing.BACKGROUND_SRC, 0, 0);
 
   return new Drawing(context, selfPlayerImg, otherPlayerImg,
-                     projectileImg, platformImg, backgroundImg);
+                     projectileImg, goalImg, platformImg, backgroundImg);
 };
 
 /**
@@ -129,6 +132,10 @@ Drawing.prototype.drawProjectile = function(x, y, width, height, orientation) {
   this.context.drawImage(this.projectileImg, 0, 0, width, height);
   this.context.restore();
 };
+
+Drawing.prototype.drawGoal = function(x, y, width, height) {
+  this.context.drawImage(this.goalImg, x, y, width, height);
+}
 
 Drawing.prototype.drawPlatform = function(x, y, width, height) {
   this.context.drawImage(this.platformImg, x, y, width, height);

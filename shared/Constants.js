@@ -74,7 +74,10 @@ Constants.SCORING_REGION = [1250, 1200, 400, 500];
  * @const
  * @type {Array<number>}
  */
-Constants.SCORING_REGION_DRAW = [1650, 1700, 400, 500];
+Constants.SCORING_REGION_DRAW = [Constants.SCORING_REGION[0],
+                                 Constants.SCORING_REGION[1] + Constants.SCORING_REGION[3],
+                                 Constants.SCORING_REGION[2],
+                                 Constants.SCORING_REGION[3]];
 
 if (typeof module === 'object') {
   /**
