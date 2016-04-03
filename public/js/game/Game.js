@@ -124,8 +124,6 @@ Game.prototype.update = function() {
     this.floaters[i]['frameCount']++;
     this.floaters[i]['y'] += 3;
 
-    console.log(this.floaters[i]['frameCount']);
-    
     if (this.floaters[i]['frameCount'] > 60) {
       this.floaters.splice(i, 1);
     }
