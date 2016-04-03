@@ -25,7 +25,7 @@ function Game(socket, inputHandler, drawing, viewport) {
   this.players = [];
   this.projectiles = [];
   this.platforms = [];
-  
+
   this.animationFrameId = 0;
 }
 
@@ -96,7 +96,7 @@ Game.prototype.receiveGameState = function(state) {
 Game.prototype.update = function() {
   if (this.self) {
     var input = this.inputHandler;
-    
+
     // Emits an event for the containing the player's intention to the server.
     var packet = {
       keyboardState: {
@@ -105,11 +105,11 @@ Game.prototype.update = function() {
         up: input.up,
         down: input.down
       },
-      
+
       mouseCoords: input.mouseCoords,
       leftClick: input.leftClick
     };
-    
+
     this.socket.emit('player-action', packet);
   }
 
@@ -125,11 +125,12 @@ Game.prototype.draw = function() {
   if (clear) {
     this.drawing.clear();
   }
-  
+
   for (var i = 0; i < this.players.length; i++) {
     var position = this.viewport.toCanvasCoords(this.players[i]['position']);
+    // adding height to allow bottom-left coordinate system
     this.drawing.drawPlayer(position[0],
-                            position[1] - this.players[i]['hitboxSize'][1], // adding height to allow bottom-left coordinate system
+                            position[1] - this.players[i]['hitboxSize'][1],
                             this.players[i]['hitboxSize'][0],
                             this.players[i]['hitboxSize'][1],
                             this.players[i]['orientation'],
@@ -139,12 +140,14 @@ Game.prototype.draw = function() {
   }
 
   for (var i = 0; i < this.projectiles.length; i++) {
-    var position = this.viewport.toCanvasCoords(this.projectiles[i]['position']);
-    this.drawing.drawProjectile(position[0],
-                                position[1] - this.projectiles[i]['hitboxSize'][1],
-                                this.projectiles[i]['hitboxSize'][0],
-                                this.projectiles[i]['hitboxSize'][1],
-                                this.projectiles[i]['orientation']);
+    var position = this.viewport.toCanvasCoords(
+        this.projectiles[i]['position']);
+    this.drawing.drawProjectile(
+        position[0],
+        position[1] - this.projectiles[i]['hitboxSize'][1],
+        this.projectiles[i]['hitboxSize'][0],
+        this.projectiles[i]['hitboxSize'][1],
+        this.projectiles[i]['orientation']);
   }
 
   for (var i = 0; i < this.platforms.length; i++) {
@@ -154,7 +157,7 @@ Game.prototype.draw = function() {
                               this.platforms[i]['hitboxSize'][0],
                               this.platforms[i]['hitboxSize'][1]);
   }
-  
+
   if (this.self) {
     var position = this.viewport.toCanvasCoords(this.self['position']);
     this.drawing.drawPlayer(position[0],
