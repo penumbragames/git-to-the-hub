@@ -38,5 +38,6 @@ $(document).ready(function() {/*
 });
 
 function init() {
+  game.init();
   game.animate();
 }

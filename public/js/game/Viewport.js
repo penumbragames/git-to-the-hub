@@ -46,7 +46,7 @@ Viewport.prototype.toCanvasCoords = function(coords) {
   var translateX = this.center[0] - Constants.CANVAS_WIDTH / 2;
   var translateY = this.center[1] - Constants.CANVAS_HEIGHT / 2;
   return [coords[0] - translateX,
-          coords[1] - translateY];
+          Constants.CANVAS_HEIGHT - (coords[1] - translateY)];
 };
 
 /**
@@ -58,5 +58,5 @@ Viewport.prototype.toAbsoluteCoords = function(coords) {
   var translateX = this.center[0] - Constants.CANVAS_WIDTH / 2;
   var translateY = this.center[1] - Constants.CANVAS_HEIGHT / 2;
   return [coords[0] + translateX,
-          coords[1] + translateY];
+          (Constants.CANVAS_HEIGHT - coords[1]) + translateY];
 };

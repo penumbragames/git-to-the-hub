@@ -28,6 +28,8 @@ function Game(socket, inputHandler, drawing, viewport) {
   this.animationFrameId = 0;
 }
 
+var x;
+
 /**
  * Factory method to create a Game object.
  * @param {Object} socket The Socket connected to the server.
@@ -77,9 +79,13 @@ Game.prototype.stopAnimation = function() {
  * @param {Object} state The game state received from the server.
  */
 Game.prototype.receiveGameState = function(state) {
+  x = state;
   this.self = state['self'];
   this.players = state['players'];
   this.projectiles = state['projectiles'];
+
+  this.viewport.setCenter(this.self['position']);
+  console.log(this.self['position']);
 };
 
 /**
@@ -115,23 +121,39 @@ Game.prototype.update = function() {
 Game.prototype.draw = function() {
   // Clear the canvas.
   this.drawing.clear();
+
+  var test = this.viewport.toCanvasCoords([0, 10]);
+  this.drawing.fillStyle = 'black';
+  this.drawing.context.fillRect(test[0], test[1], Constants.WORLD_MAX, 10);
   
   for (var i = 0; i < this.players.length; i++) {
-    var isSelf = (this.players[i] == this.self);
-    this.drawing.drawPlayer(this.players[i]['position'][0],
-                            this.players[i]['position'][1],
+    var position = this.viewport.toCanvasCoords(this.players[i]['position']);
+    this.drawing.drawPlayer(position[0],
+                            position[1],
                             this.players[i]['hitboxSize'][0],
                             this.players[i]['hitboxSize'][1],
                             this.players[i]['health'],
                             this.players[i]['name'],
-                            isSelf);
+                            false);
   }
 
   for (var i = 0; i < this.projectiles.length; i++) {
-    this.drawing.drawProjectile(this.projectiles[i]['position'][0],
-                                this.projectiles[i]['position'][1],
+    var position = this.viewport.toCanvasCoords(this.projectiles[i]['position']);
+    this.drawing.drawProjectile(position[0],
+                                position[1],
                                 this.projectiles[i]['hitboxSize'][0],
                                 this.projectiles[i]['hitboxSize'][1],
                                 this.projectiles[i]['orientation']);
+  }
+
+  if (this.self) {
+    var position = this.viewport.toCanvasCoords(this.self['position']);
+    this.drawing.drawPlayer(position[0],
+                            position[1],
+                            this.self['hitboxSize'][0],
+                            this.self['hitboxSize'][1],
+                            this.self['health'],
+                            this.self['name'],
+                            true);
   }
 };
