@@ -58,6 +58,12 @@ Constants.VISIBILITY_THRESHOLD_X = 600;
  */
 Constants.VISIBILITY_THRESHOLD_Y = 400;
 
+/**
+ * @const
+ * @type {type}
+ */
+Constants.PLAYER_MAX_HEALTH = 10;
+
 if (typeof module === 'object') {
   /**
    * This is used if Constants is being imported as a Node module.
