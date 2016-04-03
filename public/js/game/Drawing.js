@@ -12,10 +12,11 @@
  *   draw to.
  * @constructor
  */
-function Drawing(context, selfPlayerImg, otherPlayerImg) {
+function Drawing(context, selfPlayerImg, otherPlayerImg, platformImg) {
   this.context = context;
   this.selfPlayerImg = selfPlayerImg;
   this.otherPlayerImg = otherPlayerImg;
+  this.platformImg = platformImg;
 }
 
 /**
@@ -23,8 +24,10 @@ function Drawing(context, selfPlayerImg, otherPlayerImg) {
  * @type {string}
  */
 Drawing.BASE_IMG_URL = '/public/img/';
-Drawing.SELF_PLAYER_SRC = Drawing.BASE_IMG_URL + 'self-player.png';
-Drawing.OTHER_PLAYER_SRC = Drawing.BASE_IMG_URL + 'other-player.png';
+Drawing.SELF_PLAYER_LEFT_SRC = Drawing.BASE_IMG_URL + 'self-player-left.png';
+Drawing.SELF_PLAYER_RIGHT_SRC = Drawing.BASE_IMG_URL + 'self-player-right.png';
+Drawing.OTHER_PLAYER_LEFT_SRC = Drawing.BASE_IMG_URL + 'other-player-left.png';
+Drawing.OTHER_PLAYER_RIGHT_SRC = Drawing.BASE_IMG_URL + 'other-player-right.png';
 Drawing.PROJECTILE_SRC = Drawing.BASE_IMG_URL + 'projectile.png';
 Drawing.PLATFORM_SRC = Drawing.BASE_IMG_URL + 'platform.png';
 
@@ -35,9 +38,12 @@ Drawing.PLATFORM_SRC = Drawing.BASE_IMG_URL + 'platform.png';
  * @return {Drawing}
  */
 Drawing.create = function(context) {
-  var selfPlayerImg = Drawing.createImage(Drawing.SELF_PLAYER_SRC, 100, 100);
-  var otherPlayerImg = Drawing.createImage(Drawing.OTHER_PLAYER_SRC, 100, 100);
-  return new Drawing(context, selfPlayerImg, otherPlayerImg);
+  var selfPlayerImg = [Drawing.createImage(Drawing.SELF_PLAYER_LEFT_SRC, 100, 100),
+                       Drawing.createImage(Drawing.SELF_PLAYER_RIGHT_SRC, 100, 100)];
+  var otherPlayerImg = [Drawing.createImage(Drawing.OTHER_PLAYER_LEFT_SRC, 100, 100),
+                        Drawing.createImage(Drawing.OTHER_PLAYER_RIGHT_SRC, 100, 100)];
+  var platformImg = Drawing.createImage(Drawing.PLATFORM_SRC, 100, 100);
+  return new Drawing(context, selfPlayerImg, otherPlayerImg, platformImg);
 };
 
 /**
@@ -71,11 +77,19 @@ Drawing.prototype.clear = function() {
  * @param {string} name The name of the player
  * @param {boolean} self True if the player is the self player, otherwise false
  */
-Drawing.prototype.drawPlayer = function(x, y, width, height, health, name, self) {
+Drawing.prototype.drawPlayer = function(x, y, width, height, orientation, health, name, self) {
   if (self) {
-    this.context.drawImage(this.selfPlayerImg, x, y, width, height);
+    if (orientation == 0) {
+      this.context.drawImage(this.selfPlayerImg[0], x, y, width, height);
+    } else {
+      this.context.drawImage(this.selfPlayerImg[1], x, y, width, height);
+    }
   } else {
-    this.context.drawImage(this.otherPlayerImg, x, y, width, height);
+    if (orientation == 0) {
+      this.context.drawImage(this.otherPlayerImg[0], x, y, width, height);
+    } else {
+      this.context.drawImage(this.otherPlayerImg[1], x, y, width, height);
+    }
   }
 
   var healthX = x + width / 2 - Constants.PLAYER_MAX_HEALTH / 2 * 10;
@@ -101,8 +115,7 @@ Drawing.prototype.drawPlayer = function(x, y, width, height, health, name, self)
 };
 
 Drawing.prototype.drawPlatform = function(x, y, width, height) {
-  this.context.fillStyle = 'black';
-  this.context.fillRect(x, y, width, height);
+  this.context.drawImage(this.platformImg, x, y, width, height);
 };
 
 Drawing.prototype.drawProjectile = function(x, y, width, height, orientation) {
