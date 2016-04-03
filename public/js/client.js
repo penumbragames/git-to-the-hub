@@ -4,7 +4,7 @@
  */
 
 var socket = io();
-var game = Game.create(socket, $('#canvas')[0]);
+var game = Game.create(socket, $('#leaderboard')[0], $('#canvas')[0]);
 
 $(document).ready(function() {
   $('#name-input').focus();
