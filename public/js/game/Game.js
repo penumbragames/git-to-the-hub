@@ -161,7 +161,7 @@ Game.prototype.draw = function() {
 
   if (this.self) {
     var position = this.viewport.toCanvasCoords(
-        this.self['x'], this.self['y']);
+      this.self['x'], this.self['y']);
     this.drawing.drawPlayer(position[0],
                             position[1] - this.self['height'],
                             this.self['width'],
@@ -174,12 +174,12 @@ Game.prototype.draw = function() {
 
   for (var i = 0; i < this.players.length; i++) {
     var position = this.viewport.toCanvasCoords(
-        this.players[i]['x'], this.players[i]['y']);
+      this.players[i]['x'], this.players[i]['y']);
     // adding height to allow bottom-left coordinate system
     this.drawing.drawPlayer(position[0],
                             position[1] - this.players[i]['height'],
-                            this.players[i]['height'],
                             this.players[i]['width'],
+                            this.players[i]['height'],
                             this.players[i]['orientation'],
                             this.players[i]['health'],
                             this.players[i]['name'],
