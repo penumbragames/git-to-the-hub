@@ -38,13 +38,25 @@ Constants.WORLD_MAX = 2500;
  * @const
  * @type {number}
  */
-Constants.CANVAS_WIDTH = 800;
+Constants.CANVAS_WIDTH = 1080;
 
 /**
  * @const
  * @type {number}
  */
-Constants.CANVAS_HEIGHT = 600;
+Constants.CANVAS_HEIGHT = 760;
+
+/**
+ * @const
+ * @type {number}
+ */
+Constants.VISIBILITY_THRESHOLD_X = 600;
+
+/**
+ * @const
+ * @type {number}
+ */
+Constants.VISIBILITY_THRESHOLD_Y = 400;
 
 if (typeof module === 'object') {
   /**
