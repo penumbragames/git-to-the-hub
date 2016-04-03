@@ -68,7 +68,7 @@ Constants.PLAYER_MAX_HEALTH = 10;
  * @const
  * @type {Array<number>}
  */
-Constants.SCORING_REGION = [1250, 1200, 400, 500];
+Constants.SCORING_REGION = [1250, 1175, 400, 500];
 
 /**
  * @const
