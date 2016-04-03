@@ -38,25 +38,25 @@ Constants.WORLD_MAX = 2500;
  * @const
  * @type {number}
  */
-Constants.CANVAS_WIDTH = 1024;
+Constants.CANVAS_WIDTH = 768;
 
 /**
  * @const
  * @type {number}
  */
-Constants.CANVAS_HEIGHT = 768;
+Constants.CANVAS_HEIGHT = 1024;
 
 /**
  * @const
  * @type {number}
  */
-Constants.VISIBILITY_THRESHOLD_X = 600;
+Constants.VISIBILITY_THRESHOLD_X = 400;
 
 /**
  * @const
  * @type {number}
  */
-Constants.VISIBILITY_THRESHOLD_Y = 400;
+Constants.VISIBILITY_THRESHOLD_Y = 600;
 
 /**
  * @const

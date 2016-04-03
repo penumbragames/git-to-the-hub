@@ -12,11 +12,14 @@
  *   draw to.
  * @constructor
  */
-function Drawing(context, selfPlayerImg, otherPlayerImg, platformImg) {
+function Drawing(context, selfPlayerImg, otherPlayerImg,
+                 projectileImg, platformImg, backgroundImg) {
   this.context = context;
   this.selfPlayerImg = selfPlayerImg;
   this.otherPlayerImg = otherPlayerImg;
+  this.projectileImg = projectileImg;
   this.platformImg = platformImg;
+  this.backgroundImg = backgroundImg;
 }
 
 /**
@@ -30,6 +33,7 @@ Drawing.OTHER_PLAYER_LEFT_SRC = Drawing.BASE_IMG_URL + 'other-player-left.png';
 Drawing.OTHER_PLAYER_RIGHT_SRC = Drawing.BASE_IMG_URL + 'other-player-right.png';
 Drawing.PROJECTILE_SRC = Drawing.BASE_IMG_URL + 'projectile.png';
 Drawing.PLATFORM_SRC = Drawing.BASE_IMG_URL + 'platform.png';
+Drawing.BACKGROUND_SRC = Drawing.BASE_IMG_URL + 'background.png';
 
 /**
  * This is a factory method for creating a Drawing object.
@@ -38,12 +42,16 @@ Drawing.PLATFORM_SRC = Drawing.BASE_IMG_URL + 'platform.png';
  * @return {Drawing}
  */
 Drawing.create = function(context) {
-  var selfPlayerImg = [Drawing.createImage(Drawing.SELF_PLAYER_LEFT_SRC, 100, 100),
-                       Drawing.createImage(Drawing.SELF_PLAYER_RIGHT_SRC, 100, 100)];
-  var otherPlayerImg = [Drawing.createImage(Drawing.OTHER_PLAYER_LEFT_SRC, 100, 100),
-                        Drawing.createImage(Drawing.OTHER_PLAYER_RIGHT_SRC, 100, 100)];
-  var platformImg = Drawing.createImage(Drawing.PLATFORM_SRC, 100, 100);
-  return new Drawing(context, selfPlayerImg, otherPlayerImg, platformImg);
+  var selfPlayerImg = [Drawing.createImage(Drawing.SELF_PLAYER_LEFT_SRC, 0, 0),
+                       Drawing.createImage(Drawing.SELF_PLAYER_RIGHT_SRC, 0, 0)];
+  var otherPlayerImg = [Drawing.createImage(Drawing.OTHER_PLAYER_LEFT_SRC, 0, 0),
+                        Drawing.createImage(Drawing.OTHER_PLAYER_RIGHT_SRC, 0, 0)];
+  var projectileImg = Drawing.createImage(Drawing.PROJECTILE_SRC, 0, 0);
+  var platformImg = Drawing.createImage(Drawing.PLATFORM_SRC, 0, 0);
+  var backgroundImg = Drawing.createImage(Drawing.BACKGROUND_SRC, 0, 0);
+
+  return new Drawing(context, selfPlayerImg, otherPlayerImg,
+                     projectileImg, platformImg, backgroundImg);
 };
 
 /**
@@ -93,7 +101,7 @@ Drawing.prototype.drawPlayer = function(x, y, width, height, orientation, health
   }
 
   var healthX = x + width / 2 - Constants.PLAYER_MAX_HEALTH / 2 * 10;
-  var healthY = y - 10;
+  var healthY = y - 15;
   
   for (var i = 0; i < Constants.PLAYER_MAX_HEALTH; i++) {
     if (i < health) {
@@ -107,25 +115,29 @@ Drawing.prototype.drawPlayer = function(x, y, width, height, orientation, health
   }
 
   var nameX = x + width / 2;
-  var nameY = y - 20;
+  var nameY = y - 25;
   
   this.context.font = '16px Consolas';
   this.context.textAlign = 'center';
   this.context.fillText(name, nameX, nameY);
 };
 
-Drawing.prototype.drawPlatform = function(x, y, width, height) {
-  this.context.drawImage(this.platformImg, x, y, width, height);
-};
-
 Drawing.prototype.drawProjectile = function(x, y, width, height, orientation) {
   this.context.save();
   this.context.translate(x, y);
   this.context.rotate(orientation);
-  this.context.fillStyle = 'gray';
-  this.context.fillRect(0, 0, 10, 10);
+  this.context.drawImage(this.projectileImg, x, y, width, height);
   this.context.restore();
 };
+
+Drawing.prototype.drawPlatform = function(x, y, width, height) {
+  this.context.drawImage(this.platformImg, x, y, width, height);
+};
+
+Drawing.prototype.drawBackground = function() {
+  this.context.fillStyle = this.context.createPattern(this.backgroundImg, 'repeat');
+  this.context.fillRect(0, 0, Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
+}
 
 /**
  * Draws a circle on the canvas.
