@@ -62,6 +62,9 @@ app.get('/test', function(request, response) {
  */
 io.on('connection', function(socket) {
 
+  /**
+   * When a new player connects, add them to the game.
+   */
   socket.on('new-player', function(data, callback) {
     game.addNewPlayer(socket.id, data.name);
     callback({
@@ -69,7 +72,16 @@ io.on('connection', function(socket) {
     });
   });
 
-  // When a player no-usernames, remove them from the game.
+  /**
+   * Connected players sending will update their player state.
+   */
+  socket.on('player-input', function(data) {
+    game.updateOnInput(socket.id, data);
+  });
+
+  /**
+   * When a player disconnects, remove them from the game.
+   */
   socket.on('disconnect', function() {
     game.removePlayer(socket.id);
   });
