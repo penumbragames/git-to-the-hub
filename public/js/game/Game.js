@@ -142,6 +142,7 @@ Game.prototype.draw = function() {
 
   this.drawing.drawBackground();
 
+  x = Constants.SCORING_REGION;
   var goalCoords = this.viewport.toCanvasCoords(Constants.SCORING_REGION_DRAW[0],
                                                 Constants.SCORING_REGION_DRAW[1]);
   this.drawing.drawGoal(goalCoords[0], goalCoords[1],
