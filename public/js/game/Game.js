@@ -25,6 +25,7 @@ function Game(socket, inputHandler, drawing, viewport) {
   this.players = [];
   this.projectiles = [];
   this.platforms = [];
+  this.floaters = [];
 
   this.animationFrameId = 0;
 }
@@ -57,6 +58,10 @@ Game.create = function(socket, canvasElement) {
 Game.prototype.init = function() {
   this.socket.on('update', Util.bind(this, function(data) {
     this.receiveGameState(data);
+  }));
+
+  this.socket.on('floater-text', Util.bind(this, function(data) {
+    this.floaters.push(data);
   }));
 };
 
@@ -115,6 +120,15 @@ Game.prototype.update = function() {
     this.socket.emit('player-action', packet);
   }
 
+  for (var i = 0; i < this.floaters.length; i++) {
+    this.floaters[i]['frameCount']++;
+    this.floaters[i]['y'] += 3;
+
+    if (this.floaters[i]['frameCount'] > 60) {
+      this.floaters.splice(i, 1);
+    }
+  }
+  
   this.draw();
   this.animate();
 };
@@ -129,20 +143,6 @@ Game.prototype.draw = function() {
   }
 
   this.drawing.drawBackground();
-
-  for (var i = 0; i < this.players.length; i++) {
-    var position = this.viewport.toCanvasCoords(
-        this.players[i]['x'], this.players[i]['y']);
-    // adding height to allow bottom-left coordinate system
-    this.drawing.drawPlayer(position[0],
-                            position[1] - this.players[i]['height'],
-                            this.players[i]['height'],
-                            this.players[i]['width'],
-                            this.players[i]['orientation'],
-                            this.players[i]['health'],
-                            this.players[i]['name'],
-                            false);
-  }
 
   var goalCoords = this.viewport.toCanvasCoords(Constants.SCORING_REGION_DRAW[0],
                                                 Constants.SCORING_REGION_DRAW[1]);
@@ -171,6 +171,20 @@ Game.prototype.draw = function() {
                             this.self['name'],
                             true);
   }
+
+  for (var i = 0; i < this.players.length; i++) {
+    var position = this.viewport.toCanvasCoords(
+        this.players[i]['x'], this.players[i]['y']);
+    // adding height to allow bottom-left coordinate system
+    this.drawing.drawPlayer(position[0],
+                            position[1] - this.players[i]['height'],
+                            this.players[i]['height'],
+                            this.players[i]['width'],
+                            this.players[i]['orientation'],
+                            this.players[i]['health'],
+                            this.players[i]['name'],
+                            false);
+  }
   
   for (var i = 0; i < this.projectiles.length; i++) {
     var position = this.viewport.toCanvasCoords(
@@ -180,13 +194,19 @@ Game.prototype.draw = function() {
         this.projectiles[i]['width'] + " " + this.projectiles[i]['height'] + " " +
         this.projectiles[i]['orientation'];
     }
-    this.drawing.drawProjectile(
-        position[0],
-        position[1] - this.projectiles[i]['height'],
-        this.projectiles[i]['width'],
-        this.projectiles[i]['height'],
-        this.projectiles[i]['orientation']);
+    this.drawing.drawProjectile(position[0],
+                                position[1] - this.projectiles[i]['height'],
+                                this.projectiles[i]['width'],
+                                this.projectiles[i]['height'],
+                                this.projectiles[i]['orientation']);
   }
 
-  
+  for (var i = 0; i < this.floaters.length; i++) {
+    var position = this.viewport.toCanvasCoords(
+      this.floaters[i]['x'], this.floaters[i]['y']);
+    this.drawing.drawFloater(position[0],
+                             position[1],
+                             this.floaters[i]['frameCount'],
+                             this.floaters[i]['text']);
+  }
 };
