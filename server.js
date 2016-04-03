@@ -47,14 +47,6 @@ app.get('/', function(request, response) {
   });
 });
 
-app.get('/test', function(request, response) {
-  if (DEV_MODE) {
-    response.render('test');
-  } else {
-    response.redirect('/');
-  }
-})
-
 /**
  * Server side input handler, modifies the state of the players and the
  * game based on the input it receives. Everything runs asynchronously with
