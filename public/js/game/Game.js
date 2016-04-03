@@ -129,9 +129,10 @@ Game.prototype.draw = function() {
   for (var i = 0; i < this.players.length; i++) {
     var position = this.viewport.toCanvasCoords(this.players[i]['position']);
     this.drawing.drawPlayer(position[0],
-                            position[1],
+                            position[1] - this.players[i]['hitboxSize'][1], // adding height to allow bottom-left coordinate system
                             this.players[i]['hitboxSize'][0],
                             this.players[i]['hitboxSize'][1],
+                            this.players[i]['orientation'],
                             this.players[i]['health'],
                             this.players[i]['name'],
                             false);
@@ -140,7 +141,7 @@ Game.prototype.draw = function() {
   for (var i = 0; i < this.projectiles.length; i++) {
     var position = this.viewport.toCanvasCoords(this.projectiles[i]['position']);
     this.drawing.drawProjectile(position[0],
-                                position[1],
+                                position[1] - this.projectiles[i]['hitboxSize'][1],
                                 this.projectiles[i]['hitboxSize'][0],
                                 this.projectiles[i]['hitboxSize'][1],
                                 this.projectiles[i]['orientation']);
@@ -149,7 +150,7 @@ Game.prototype.draw = function() {
   for (var i = 0; i < this.platforms.length; i++) {
     var position = this.viewport.toCanvasCoords(this.platforms[i]['position']);
     this.drawing.drawPlatform(position[0],
-                              position[1],
+                              position[1] - this.platforms[i]['hitboxSize'][1],
                               this.platforms[i]['hitboxSize'][0],
                               this.platforms[i]['hitboxSize'][1]);
   }
@@ -157,9 +158,10 @@ Game.prototype.draw = function() {
   if (this.self) {
     var position = this.viewport.toCanvasCoords(this.self['position']);
     this.drawing.drawPlayer(position[0],
-                            position[1],
+                            position[1] - this.self['hitboxSize'][1],
                             this.self['hitboxSize'][0],
                             this.self['hitboxSize'][1],
+                            this.self['orientation'],
                             this.self['health'],
                             this.self['name'],
                             true);
