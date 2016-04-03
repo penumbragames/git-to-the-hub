@@ -6,7 +6,7 @@
 var socket = io();
 var game = Game.create(socket, $('#canvas')[0]);
 
-$(document).ready(function() {
+$(document).ready(function() {/*
   $('#name-form').focus();
 
   $('#name-form').submit = function() {
@@ -24,7 +24,16 @@ $(document).ready(function() {
 
     return false;
   }
+                              */
 
+  socket.emit('new-player', {
+    name: 'blarg'
+  }, function(data) {
+    if (!data['success']) {
+      window.alert(data['message']);
+    }
+  });
+  
   init();
 });
 
