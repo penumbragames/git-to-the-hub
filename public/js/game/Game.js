@@ -144,20 +144,6 @@ Game.prototype.draw = function() {
 
   this.drawing.drawBackground();
 
-  for (var i = 0; i < this.players.length; i++) {
-    var position = this.viewport.toCanvasCoords(
-        this.players[i]['x'], this.players[i]['y']);
-    // adding height to allow bottom-left coordinate system
-    this.drawing.drawPlayer(position[0],
-                            position[1] - this.players[i]['height'],
-                            this.players[i]['height'],
-                            this.players[i]['width'],
-                            this.players[i]['orientation'],
-                            this.players[i]['health'],
-                            this.players[i]['name'],
-                            false);
-  }
-
   var goalCoords = this.viewport.toCanvasCoords(Constants.SCORING_REGION_DRAW[0],
                                                 Constants.SCORING_REGION_DRAW[1]);
   this.drawing.drawGoal(goalCoords[0], goalCoords[1],
@@ -184,6 +170,20 @@ Game.prototype.draw = function() {
                             this.self['health'],
                             this.self['name'],
                             true);
+  }
+
+  for (var i = 0; i < this.players.length; i++) {
+    var position = this.viewport.toCanvasCoords(
+        this.players[i]['x'], this.players[i]['y']);
+    // adding height to allow bottom-left coordinate system
+    this.drawing.drawPlayer(position[0],
+                            position[1] - this.players[i]['height'],
+                            this.players[i]['height'],
+                            this.players[i]['width'],
+                            this.players[i]['orientation'],
+                            this.players[i]['health'],
+                            this.players[i]['name'],
+                            false);
   }
   
   for (var i = 0; i < this.projectiles.length; i++) {
