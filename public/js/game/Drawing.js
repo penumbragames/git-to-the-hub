@@ -61,12 +61,33 @@ Drawing.prototype.clear = function() {
       0, 0, Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
 };
 
-Drawing.prototype.drawPlayer = function(x, y, width, height, self) {
+Drawing.prototype.drawPlayer = function(x, y, width, height, health, name, self) {
   if (self) {
     this.context.drawImage(this.selfPlayerImg, x, y, width, height);
   } else {
     this.context.drawImage(this.otherPlayerImg, x, y, width, height);
   }
+
+  var healthX = x + width / 2 - Constants.PLAYER_MAX_HEALTH / 2 * 10;
+  var healthY = y - 10;
+  
+  for (var i = 0; i < Constants.PLAYER_MAX_HEALTH; i++) {
+    if (i < health) {
+      this.context.fillStyle = 'green';
+    } else {
+      this.context.fillStyle = 'red';
+    }
+
+    this.context.fillRect(healthX, healthY, 10, 10);
+    healthX += 10;
+  }
+
+  var nameX = x + width / 2;
+  var nameY = y - 20;
+  
+  this.context.font = '16px Consolas';
+  this.context.textAlign = 'center';
+  this.context.fillText(name, nameX, nameY);
 };
 
 Drawing.prototype.drawPlatform = function(x, y, width, height) {
