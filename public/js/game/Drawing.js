@@ -61,6 +61,16 @@ Drawing.prototype.clear = function() {
       0, 0, Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
 };
 
+/**
+ * Draws a player onto the canvas.
+ * @param {number} x The x coordinate of the player in canvas coordinates
+ * @param {number} y The y coordinate of the player in canvas coordinates
+ * @param {number} width The width of the player
+ * @param {number} height The height of the player
+ * @param {number} health The health of the player
+ * @param {string} name The name of the player
+ * @param {boolean} self True if the player is the self player, otherwise false
+ */
 Drawing.prototype.drawPlayer = function(x, y, width, height, health, name, self) {
   if (self) {
     this.context.drawImage(this.selfPlayerImg, x, y, width, height);

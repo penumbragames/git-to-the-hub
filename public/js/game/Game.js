@@ -30,6 +30,7 @@ function Game(socket, inputHandler, drawing, viewport) {
 }
 
 var x;
+var clear = true;
 
 /**
  * Factory method to create a Game object.
@@ -84,7 +85,7 @@ Game.prototype.receiveGameState = function(state) {
   this.players = state['players'];
   this.projectiles = state['projectiles'];
   this.platforms = state['platforms'];
-
+  x = this.platforms;
   this.viewport.setCenter(this.self['position']);
 };
 
@@ -121,7 +122,9 @@ Game.prototype.update = function() {
  */
 Game.prototype.draw = function() {
   // Clear the canvas.
-  this.drawing.clear();
+  if (clear) {
+    this.drawing.clear();
+  }
   
   for (var i = 0; i < this.players.length; i++) {
     var position = this.viewport.toCanvasCoords(this.players[i]['position']);
