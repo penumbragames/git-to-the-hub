@@ -122,6 +122,7 @@ Drawing.prototype.drawPlayer = function(x, y, width, height, orientation, health
   
   this.context.font = '16px Consolas';
   this.context.textAlign = 'center';
+  this.context.fillStyle = 'white';
   this.context.fillText(name, nameX, nameY);
 };
 
@@ -144,6 +145,16 @@ Drawing.prototype.drawPlatform = function(x, y, width, height) {
 Drawing.prototype.drawBackground = function() {
   this.context.fillStyle = this.context.createPattern(this.backgroundImg, 'repeat');
   this.context.fillRect(0, 0, Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
+}
+
+Drawing.prototype.drawFloater = function(x, y, frame, text) {
+  this.context.save();
+  this.context.font = '16px Consolas';
+  this.context.textAlign = 'center';
+  this.context.fillStyle = 'white';
+  this.context.globalAlpha = 1 - frame / 60;
+  this.context.fillText(text, x, y);
+  this.context.restore();
 }
 
 /**
