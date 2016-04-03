@@ -4,17 +4,12 @@ block head
   link(rel="stylesheet", href="/public/dist/index.min.css")
         
 block body
-  br
   #container
-    hr
-    
-    a(href="/logout") Logout
-    
-    #copyright &copy; 2015 Alvin Lin and Kenneth Li. All Rights Reserved.
   
 block scripts
   script(src="/public/bower/jquery/dist/jquery.min.js")
   if dev_mode
     script(src="/public/js/index.js")
+    // Link the rest of the scripts
   else
     script(src="/public/dist/index.min.js")

@@ -23,14 +23,14 @@ var http = require('http');
 var morgan = require('morgan');
 var socketIO = require('socket.io');
 
-var Game = require('/lib/Game');
+var Game = require('./lib/Game');
 
 // Initialization.
 var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
 
-var game = Game.create();
+var game = Game.create(io);
 
 app.set('port', PORT_NUMBER);
 app.set('view engine', 'jade');
@@ -47,6 +47,14 @@ app.get('/', function(request, response) {
   });
 });
 
+app.get('/test', function(request, response) {
+  if (DEV_MODE) {
+    response.render('test');
+  } else {
+    response.redirect('/');
+  }
+})
+
 /**
  * Server side input handler, modifies the state of the players and the
  * game based on the input it receives. Everything runs asynchronously with
@@ -54,14 +62,20 @@ app.get('/', function(request, response) {
  */
 io.on('connection', function(socket) {
 
+  socket.on('new-player', function(data, callback) {
+    game.addNewPlayer(socket.id, data.name)
+  });
+
   // When a player no-usernames, remove them from the game.
   socket.on('disconnect', function() {
+    game.removePlayer(socket.id);
   });
 });
 
 // Server side game loop, runs at 60Hz and sends out update packets to all
 // clients every tick.
 setInterval(function() {
+  game.sendState();
 }, FRAME_RATE);
 
 // Starts the server.

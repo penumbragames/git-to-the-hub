@@ -12,6 +12,19 @@ function Util() {
 }
 
 /**
+ * Binds a function to a context, useful for assigning event handlers and
+ * function callbacks.
+ * @param {Object} context The context to assign the method to.
+ * @param {function(?)} method The method to bind the context to.
+ * @return {function(?)}
+ */
+Util.bind = function (context, method) {
+  return function() {
+    return method.apply(context, arguments);
+  };
+};
+
+/**
  * This method returns the sign of a number.
  * @param {number} x The number to check.
  * @return {number}
