@@ -60,9 +60,15 @@ Constants.VISIBILITY_THRESHOLD_Y = 600;
 
 /**
  * @const
- * @type {type}
+ * @type {number}
  */
 Constants.PLAYER_MAX_HEALTH = 10;
+
+/**
+ * @const
+ * @type {Array<number>}
+ */
+Constants.SCORING_REGION = [1250, 1200, 400, 500];
 
 if (typeof module === 'object') {
   /**
