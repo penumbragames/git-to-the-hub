@@ -128,7 +128,7 @@ Game.prototype.draw = function() {
     this.drawing.clear();
   }
 
-  //this.drawing.drawBackground();
+  this.drawing.drawBackground();
 
   for (var i = 0; i < this.players.length; i++) {
     var position = this.viewport.toCanvasCoords(
