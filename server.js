@@ -67,8 +67,8 @@ io.on('connection', function(socket) {
   /**
    * Connected players sending will update their player state.
    */
-  socket.on('player-input', function(data) {
-    game.updateOnInput(socket.id, data);
+  socket.on('player-action', function(data) {
+    game.updatePlayerOnInput(socket.id, data);
   });
 
   /**
@@ -85,6 +85,7 @@ io.on('connection', function(socket) {
  * necessary connected clients.
  */
 setInterval(function() {
+  game.update();
   game.sendState();
 }, FRAME_RATE);
 
