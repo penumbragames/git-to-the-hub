@@ -1,6 +1,6 @@
 /**
  * @fileoverview This is a class encapsulating the client side of the game,
- *   which handles the rendering of the lobby and game and the sending of
+ *   which handles the rendering of the game and the sending of
  *   user input to the server.
  * @author alvin.lin.dev@gmail.com (Alvin Lin)
  */
@@ -11,15 +11,15 @@
  * @param {Object} socket The socket connected to the server.
  * @param {Input} inputHandler The Input object that will track user input.
  * @param {Drawing} drawing The Drawing object that will render the game.
- * @param {ViewPort} viewPort The ViewPort object that will manage the player's
+ * @param {Viewport} viewport The Viewport object that will manage the player's
  *   current view.
  */
-function Game(socket, inputHandler, drawing, viewPort) {
+function Game(socket, inputHandler, drawing, viewport) {
   this.socket = socket;
 
   this.inputHandler = inputHandler;
   this.drawing = drawing;
-  this.viewPort = viewPort;
+  this.viewport = viewport;
 
   this.selfPlayer = null;
   this.otherPlayers = [];
@@ -30,21 +30,19 @@ function Game(socket, inputHandler, drawing, viewPort) {
 /**
  * Factory method to create a Game object.
  * @param {Object} socket The Socket connected to the server.
- * @param {Element} lobbyElement The element that the game lobby will be
- *   rendered in.
  * @param {Element} canvasElement The canvas element that the game will use to
  *   draw to.
  * @return {Game}
  */
-Game.create = function(socket, lobbyElement, canvasElement) {
+Game.create = function(socket, canvasElement) {
   canvasElement.width = Constants.CANVAS_WIDTH;
   canvasElement.height = Constants.CANVAS_HEIGHT;
   var canvasContext = canvasElement.getContext('2d');
 
   var inputHandler = Input.create(canvasElement);
   var drawing = Drawing.create(canvasContext);
-  var viewPort = ViewPort.create();
-  return new Game(socket, inputHandler, drawing, viewPort);
+  var viewport = Viewport.create();
+  return new Game(socket, inputHandler, drawing, viewport);
 };
 
 /**
@@ -97,7 +95,6 @@ Game.prototype.update = function() {
   }
 
   this.draw();
-
   this.animate();
 };
 
@@ -107,5 +104,4 @@ Game.prototype.update = function() {
 Game.prototype.draw = function() {
   // Clear the canvas.
   this.drawing.clear();
-
 };

@@ -1,7 +1,7 @@
 /**
  * Methods for drawing all the sprites onto the HTML5 canvas. All coordinates
  * passed the methods of the Drawing class should be canvas coordinates and not
- * absolute game coordinates. They must be passed through the ViewPort class
+ * absolute game coordinates. They must be passed through the Viewport class
  * before coming into the Drawing class.
  * @author kennethli.3470@gmail.com (Kenneth Li)
  */
@@ -52,3 +52,32 @@ Drawing.prototype.clear = function() {
   this.context.clearRect(
       0, 0, Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
 };
+
+Drawing.prototype.drawPlayer = function(x, y, width, height) {
+  this.context.fillStyle = 'blue';
+  this.context.fillRect(x, y, width, height);
+};
+
+Drawing.prototype.drawPlatform = function(x, y, width, height, color) {
+  this.context.fillStyle = color;
+  this.context.fillRect(x, y, width, height);
+};
+
+Drawing.prototype.drawProjectile = function(x, y, width, height, color) {
+  this.context.fillStyle = color;
+  this.context.fillRect(x, y, width, height);
+};
+
+/**
+ * Draws a circle on the canvas.
+ * @param {number} x The x coordinate of the center.
+ * @param {number} y The y coordinate of the center.
+ * @param {number} r The radius of he circle.
+ * @param {string} color The color of the circle.
+ */
+Drawing.prototype.drawCircle = function(x, y, r, color) {
+  this.context.beginPath();
+  this.context.arc(x, y, r, 0, 2 * Math.PI, false);
+  this.context.fillStyle = color;
+  this.context.fill();
+}
