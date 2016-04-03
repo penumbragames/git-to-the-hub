@@ -8,7 +8,6 @@
     <title>GitToTheTop</title>
     <meta name="description" content="Get to the top, be the first!" />
     <meta name="keywords" content="King of the Hill variant with integrated elements" />
-    <meta name="author" content="Codrops" />
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/default.css" />
@@ -51,7 +50,7 @@
     </canvas>
     <!-- /container -->
     <script>
-    //  The function to change the class
+    //  Mobile Viewport changer
     var changeClass = function(r, className1, className2) {
         var regex = new RegExp("(?:^|\\s+)" + className1 + "(?:\\s+|$)");
         if (regex.test(r.className)) {
@@ -62,16 +61,13 @@
         return r.className;
     };
 
-    //  Creating our button in JS for smaller screens
     var menuElements = document.getElementById('menu');
     menuElements.insertAdjacentHTML('afterBegin', '<button type="button" id="menutoggle" class="navtoogle" aria-hidden="true"><i aria-hidden="true" class="icon-menu"> </i> Menu</button>');
 
-    //  Toggle the class on click to show / hide the menu
     document.getElementById('menutoggle').onclick = function() {
         changeClass(this, 'navtoogle active', 'navtoogle');
     }
 
-    // http://tympanus.net/codrops/2013/05/08/responsive-retina-ready-menu/comment-page-2/#comment-438918
     document.onclick = function(e) {
         var mobileButton = document.getElementById('menutoggle'),
             buttonStyle = mobileButton.currentStyle ? mobileButton.currentStyle.display : getComputedStyle(mobileButton, null).display;
