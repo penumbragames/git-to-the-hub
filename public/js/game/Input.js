@@ -68,6 +68,7 @@ Input.prototype.removeEventHandlers = function() {
  * @param {Event} event The event passed to this function.
  */
 Input.prototype.onMouseDown = function(event) {
+  this.onMouseMove(event);
   this.leftClick = event.which == 1;
   this.rightClick = event.which == 3;
 };
@@ -78,6 +79,7 @@ Input.prototype.onMouseDown = function(event) {
  * @param {Event} event The event passed to this function.
  */
 Input.prototype.onMouseUp = function(event) {
+  this.onMouseMove(event);
   this.leftClick = !(event.which == 1);
   this.rightClick = !(event.which == 3);
 };
