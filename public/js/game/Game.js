@@ -21,9 +21,10 @@ function Game(socket, inputHandler, drawing, viewport) {
   this.drawing = drawing;
   this.viewport = viewport;
 
-  this.selfPlayer = null;
-  this.otherPlayers = [];
-
+  this.self = null;
+  this.players = [];
+  this.projectiles = [];
+  
   this.animationFrameId = 0;
 }
 
@@ -50,7 +51,7 @@ Game.create = function(socket, canvasElement) {
  * event handlers.
  */
 Game.prototype.init = function() {
-  this.socket.on('update', bind(this, function(data) {
+  this.socket.on('update', Util.bind(this, function(data) {
     this.receiveGameState(data);
   }));
 };
@@ -60,7 +61,7 @@ Game.prototype.init = function() {
  */
 Game.prototype.animate = function() {
   this.animationFrameId = window.requestAnimationFrame(
-      bind(this, this.update));
+      Util.bind(this, this.update));
 };
 
 /**
@@ -78,6 +79,7 @@ Game.prototype.stopAnimation = function() {
 Game.prototype.receiveGameState = function(state) {
   this.self = state['self'];
   this.players = state['players'];
+  this.projectiles = state['projectiles'];
 };
 
 /**
@@ -86,11 +88,20 @@ Game.prototype.receiveGameState = function(state) {
  */
 Game.prototype.update = function() {
   if (this.self) {
+    var input = this.inputHandler;
+    
     // Emits an event for the containing the player's intention to the server.
     var packet = {
       keyboardState: {
-      }
+        left: input.left,
+        right: input.right,
+        up: input.up,
+        down: input.down
+      },
+      
+      mouseCoords: input.mouseCoords
     };
+
     this.socket.emit('player-action', packet);
   }
 
@@ -104,4 +115,21 @@ Game.prototype.update = function() {
 Game.prototype.draw = function() {
   // Clear the canvas.
   this.drawing.clear();
+  
+  for (var i = 0; i < this.players.length; i++) {
+    var isSelf = (this.players[i] == this.self);
+    this.drawing.drawPlayer(this.players[i]['position'][0],
+                            this.players[i]['position'][1],
+                            this.players[i]['hitboxSize'][0],
+                            this.players[i]['hitboxSize'][1],
+                            isSelf);
+  }
+
+  for (var i = 0; i < this.projectiles.length; i++) {
+    this.drawing.drawProjectile(this.projectiles[i]['position'][0],
+                                this.projectiles[i]['position'][1],
+                                this.projectiles[i]['hitboxSize'][0],
+                                this.projectiles[i]['hitboxSize'][1],
+                                this.projectiles[i]['orientation']);
+  }
 };
