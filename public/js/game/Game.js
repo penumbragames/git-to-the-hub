@@ -105,7 +105,8 @@ Game.prototype.update = function() {
         down: input.down
       },
       
-      mouseCoords: input.mouseCoords
+      mouseCoords: input.mouseCoords,
+      leftClick: input.leftClick
     };
     
     this.socket.emit('player-action', packet);
