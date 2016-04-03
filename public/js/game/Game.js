@@ -122,6 +122,8 @@ Game.prototype.draw = function() {
                             this.players[i]['position'][1],
                             this.players[i]['hitboxSize'][0],
                             this.players[i]['hitboxSize'][1],
+                            this.players[i]['health'],
+                            this.players[i]['name'],
                             isSelf);
   }
 
