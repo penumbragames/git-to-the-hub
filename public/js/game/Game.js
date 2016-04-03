@@ -83,7 +83,6 @@ Game.prototype.stopAnimation = function() {
 Game.prototype.receiveGameState = function(state) {
   this.self = state['self'];
   this.players = state['players'];
-  console.log(this.platforms);
   this.projectiles = state['projectiles'];
   this.platforms = state['platforms'];
   x = this.platforms;

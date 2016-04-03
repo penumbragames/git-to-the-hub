@@ -75,7 +75,7 @@ gulp.task('js-compile', function() {
 });
 
 gulp.task('less', function() {
-  return gulp.src('./public/less/index.less')
+  return gulp.src('./public/styles/index.less')
     .pipe(plumber())
     .pipe(getLessConfiguration())
     .pipe(rename('index.min.css'))
@@ -90,7 +90,7 @@ gulp.task('watch-js', function() {
 });
 
 gulp.task('watch-less', function() {
-  gulp.watch('./public/less/*.less', ['less']);
+  gulp.watch('./public/styles/*.less', ['less']);
 });
 
 gulp.task('watch', function() {
@@ -98,5 +98,5 @@ gulp.task('watch', function() {
               './lib/**/*.js',
               './public/js/**/*.js',
               './shared/*.js' ], ['js-compile']);
-  gulp.watch('./public/less/*.less', ['less']);
+  gulp.watch('./public/styles/*.less', ['less']);
 });
