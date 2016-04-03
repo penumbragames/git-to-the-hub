@@ -85,7 +85,6 @@ Game.prototype.receiveGameState = function(state) {
   this.players = state['players'];
   this.projectiles = state['projectiles'];
   this.platforms = state['platforms'];
-  x = this.platforms;
 };
 
 /**
@@ -129,7 +128,7 @@ Game.prototype.draw = function() {
     this.drawing.clear();
   }
 
-  this.drawing.drawBackground();
+  //this.drawing.drawBackground();
 
   for (var i = 0; i < this.players.length; i++) {
     var position = this.viewport.toCanvasCoords(
@@ -143,17 +142,6 @@ Game.prototype.draw = function() {
                             this.players[i]['health'],
                             this.players[i]['name'],
                             false);
-  }
-
-  for (var i = 0; i < this.projectiles.length; i++) {
-    var position = this.viewport.toCanvasCoords(
-        this.projectiles[i]['x'], this.projectiles[i]['y']);
-    this.drawing.drawProjectile(
-        position[0],
-        position[1] - this.projectiles[i]['height'],
-        this.projectiles[i]['width'],
-        this.projectiles[i]['height'],
-        this.projectiles[i]['orientation']);
   }
 
   for (var i = 0; i < this.platforms.length; i++) {
@@ -176,5 +164,21 @@ Game.prototype.draw = function() {
                             this.self['health'],
                             this.self['name'],
                             true);
+  }
+  
+  for (var i = 0; i < this.projectiles.length; i++) {
+    var position = this.viewport.toCanvasCoords(
+      this.projectiles[i]['x'], this.projectiles[i]['y']);
+    if (this.projectiles[i]['shouldExist']) {
+      x = position[0] + " " + (position[1] - this.projectiles[i]['height']) + " " +
+        this.projectiles[i]['width'] + " " + this.projectiles[i]['height'] + " " +
+        this.projectiles[i]['orientation'];
+    }
+    this.drawing.drawProjectile(
+        position[0],
+        position[1] - this.projectiles[i]['height'],
+        this.projectiles[i]['width'],
+        this.projectiles[i]['height'],
+        this.projectiles[i]['orientation']);
   }
 };

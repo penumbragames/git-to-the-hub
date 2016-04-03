@@ -90,9 +90,7 @@ Input.prototype.onMouseUp = function(event) {
  * @param {Event} event The event passed to this function.
  */
 Input.prototype.onMouseMove = function(event) {
-  var boundingRect = this.element.getBoundingClientRect();
-  this.mouseCoords = [event.pageX - boundingRect.left,
-                      event.pageY - boundingRect.top];
+  this.mouseCoords = [event.offsetX, event.offsetY];
 };
 
 /**
