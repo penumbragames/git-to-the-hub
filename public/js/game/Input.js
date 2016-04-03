@@ -32,7 +32,7 @@ function Input(element) {
  */
 Input.create = function(element) {
   // This attribute is necessary to allow the element to listen to key events.
-  element.setAttribute('taUtil.bindex', 1);
+  element.setAttribute('tabindex', 1);
   var input = new Input(element);
   input.applyEventHandlers();
   return input;

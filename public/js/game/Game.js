@@ -79,7 +79,6 @@ Game.prototype.stopAnimation = function() {
  * @param {Object} state The game state received from the server.
  */
 Game.prototype.receiveGameState = function(state) {
-  x = state;
   this.self = state['self'];
   this.players = state['players'];
   this.projectiles = state['projectiles'];
@@ -107,7 +106,7 @@ Game.prototype.update = function() {
       
       mouseCoords: input.mouseCoords
     };
-
+    
     this.socket.emit('player-action', packet);
   }
 
@@ -123,8 +122,11 @@ Game.prototype.draw = function() {
   this.drawing.clear();
 
   var test = this.viewport.toCanvasCoords([0, 10]);
-  this.drawing.fillStyle = 'black';
-  this.drawing.context.fillRect(test[0], test[1], Constants.WORLD_MAX, 10);
+  this.drawing.context.fillStyle = 'black';
+  
+  for (var i = 0; i < Constants.WORLD_MAX; i += 60) {
+    this.drawing.context.fillRect(i, test[1], 30, 10);
+  }
   
   for (var i = 0; i < this.players.length; i++) {
     var position = this.viewport.toCanvasCoords(this.players[i]['position']);
