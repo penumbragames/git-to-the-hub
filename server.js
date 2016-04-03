@@ -87,8 +87,11 @@ io.on('connection', function(socket) {
   });
 });
 
-// Server side game loop, runs at 60Hz and sends out update packets to all
-// clients every tick.
+
+/**
+ * Server side game loop, runs at 60Hz and sends out update packets to the
+ * necessary connected clients.
+ */
 setInterval(function() {
   game.sendState();
 }, FRAME_RATE);

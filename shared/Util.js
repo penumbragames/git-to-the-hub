@@ -18,7 +18,7 @@ function Util() {
  * @param {function(?)} method The method to bind the context to.
  * @return {function(?)}
  */
-Util.bind = function(context, method) {}
+Util.bind = function(context, method) {
   return function() {
     return method.apply(context, arguments);
   };
@@ -186,7 +186,7 @@ Util.choiceArray = function(array) {
 
 if (typeof module === 'object') {
   /**
-   * This is used if Constants is being imported as a Node module.
+   * This is used if Util is being imported as a Node module.
    */
   module.exports = Util;
 } else {
@@ -194,5 +194,5 @@ if (typeof module === 'object') {
    * Otherwise, if this class is used on the client side, then just load
    * it into the window context.
    */
-  window.Constants = Util;
+  window.Util = Util;
 }
